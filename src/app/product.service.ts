@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'crud/node_modules/rxjs';
 import { DepartmentService } from './department.service';
 import { combineLatest } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { Department } from './department';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,44 @@ private loaded: boolean = false;
       this.loaded = true;
     }
     return this.productsSubject$.asObservable();
+  }
+
+  add(prod: Product): Observable<Product> {
+    const departments = (prod.departments as Department[]).map(d => d._id);
+    return this.http.post<Product>(this.url, {...prod, departments})
+    .pipe(
+      tap((p) => {
+        this.productsSubject$.getValue()
+        .push({...prod, _id: p._id});
+      })
+    );
+  }
+
+  del(prod: Product): Observable<any> {
+    return this.http.delete(`${this.url}/${prod._id}`)
+    .pipe(
+      tap(() => {
+        let products = this.productsSubject$.getValue();
+        let i = products.findIndex(p => p._id === prod._id);
+        if (i >= 0)
+            products.splice(i, 1);
+
+      })
+    );
+  }
+
+  update(prod: Product): Observable<Product> {
+    let departments = (prod.departments as Department[]).map(d => d._id);
+    return this.http.patch<Product>(`${this.url}/${prod._id}`, {...prod, departments})
+    .pipe(
+      tap(() => {
+        let products = this.productsSubject$.getValue();
+        let i = products.findIndex(p => p._id === prod._id);
+        if (i >= 0)
+            products[i] = prod;
+
+      })
+    );
+
   }
 }
