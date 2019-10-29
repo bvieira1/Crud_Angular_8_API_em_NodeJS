@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Department } from '../department';
 import { DepartmentService } from '../department.service';
 import { MatSnackBar } from '@angular/material';
-import { Subject } from 'crud/node_modules/rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-department',

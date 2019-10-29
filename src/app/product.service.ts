@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './product';
-import { BehaviorSubject, Observable } from 'crud/node_modules/rxjs';
 import { DepartmentService } from './department.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Department } from './department';
 
