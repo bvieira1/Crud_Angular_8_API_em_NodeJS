@@ -39,6 +39,29 @@
                 <button mat-button color="warn" fxFlex="10" type="cancel">Cancel</button>
             </div>
         </form>
+
+        <ng-container *ngIf="products?.length>0; else empty">
+            <mat-list>
+                <h3 mat-subheader>Products</h3>
+                <mat-list-item *ngFor="let prod of products">
+                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <h4 mat-line>{{prod.name}}</h4>
+                    <h4 mat-line>Price: {{prod.price | currency:"R$ "}} - Stock: {{prod.stock}}</h4>
+                    <mat-chip-list mat-line>
+                        <mat-chip *ngFor="let d of prod.departments">{{d.name}}</mat-chip>
+                    </mat-chip-list>
+                    <button mat-icon-button color="accent" (click)="delete(prod)">
+                <mat-icon>delete</mat-icon>
+              </button>
+                    <button mat-icon-button color="primary" (click)="edit(prod)">
+                <mat-icon>edit</mat-icon>
+              </button>
+                </mat-list-item>
+            </mat-list>
+        </ng-container>
+        <ng-template #empty>
+            <div><em>Empty</em></div>
+        </ng-template>
     </mat-card-content>
 
 </mat-card>

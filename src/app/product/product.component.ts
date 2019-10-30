@@ -6,6 +6,7 @@ import { DepartmentService } from '../department.service';
 import { Department } from '../department';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-product',
@@ -30,7 +31,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private fb: FormBuilder,
-    private departmentService: DepartmentService) { }
+    private departmentService: DepartmentService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.productService.get()
@@ -45,7 +47,30 @@ export class ProductComponent implements OnInit {
   }
 
   save() {
+    let data = this.productForm.value;
+    if (data._id != null) {
+      this.productService.update(data)
+      .subscribe()
+    } else {
+      this.productService.add(data)
+      .subscribe();
+    }
+  }
 
+  delete(p: Product) {
+    this.productService.del(p)
+    .subscribe(
+      () => this.notify('Deleted!'),
+      (err) => console.log(err)
+    );
+  }
+
+  edit(p: Product) {
+    this.productForm.setValue(p);
+  }
+
+  notify(msg: string) {
+    this.snackBar.open(msg, 'OK', {duration: 3000});
   }
 
 }
