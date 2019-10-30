@@ -4,7 +4,7 @@
     </mat-card-title>
 
     <mat-card-content>
-        <form [formGroup]="productForm" (ngSubmit)="save()" fxLayout="column" fxLayoutAlign="space-between">
+        <form [formGroup]="productForm" (ngSubmit)="save()" fxLayout="column" fxLayoutAlign="space-between" #form="ngForm">
             <input type="hidden" formControlName="_id">
 
             <mat-form-field>
@@ -36,7 +36,7 @@
 
             <div fxLayout="row" fxLayoutAlign="end end">
                 <button mat-button color="primary" fxFlex="10" type="submit">Save</button>
-                <button mat-button color="warn" fxFlex="10" type="cancel">Cancel</button>
+                <button mat-button color="warn" fxFlex="10" type="reset">Cancel</button>
             </div>
         </form>
 

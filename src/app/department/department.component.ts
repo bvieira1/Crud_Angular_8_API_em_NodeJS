@@ -60,7 +60,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   cancel() {
-
+    this.clearFields();
   }
 
   edit(dep: Department) {
