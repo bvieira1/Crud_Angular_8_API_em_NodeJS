@@ -53,6 +53,7 @@ export class DepartmentService {
       .pipe(
         tap((d) => {
           const departments = this.departmentsSubject$.getValue();
+          // tslint:disable-next-line:no-shadowed-variable
           const i = departments.findIndex(d => d._id === dep._id);
           if (i >= 0) {
             departments[i].name = d.name;

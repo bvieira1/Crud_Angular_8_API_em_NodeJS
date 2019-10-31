@@ -72,7 +72,7 @@ export class DepartmentComponent implements OnInit {
     this.departmentService.del(dep)
     .subscribe(
       () => this.notify('Removed!'),
-      (err) => console.log(err)
+      (err) => this.notify(err.error.msg)
     );
   }
 
